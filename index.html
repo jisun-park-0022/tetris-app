@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetris</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <h1>TETRIS</h1>
+
+  <div class="game-wrapper">
+    <aside class="rules-panel">
+      <div class="panel-card">
+        <h3>How to Play</h3>
+        <ol class="rules-list">
+          <li>블록이 위에서 아래로 자동으로 떨어집니다.</li>
+          <li>가로 줄을 빈 칸 없이 채우면 해당 줄이 사라집니다.</li>
+          <li>블록이 화면 위쪽에 쌓이면 게임이 끝납니다.</li>
+          <li>더 많은 줄을 동시에 지울수록 높은 점수를 얻습니다.</li>
+        </ol>
+      </div>
+
+      <div class="panel-card">
+        <h3>Scoring</h3>
+        <ul class="score-table">
+          <li><span class="line-label">1 Line</span><span class="line-pts">100 pts</span></li>
+          <li><span class="line-label">2 Lines</span><span class="line-pts">200 pts</span></li>
+          <li><span class="line-label">3 Lines</span><span class="line-pts">300 pts</span></li>
+          <li class="tetris-row"><span class="line-label">4 Lines ✦</span><span class="line-pts tetris-pts">400 pts</span></li>
+        </ul>
+        <p class="tetris-note">✦ 4줄 동시 제거 = <strong>TETRIS!</strong></p>
+      </div>
+
+      <div class="panel-card">
+        <h3>Pieces</h3>
+        <ul class="pieces-list">
+          <li><span class="piece-block" style="background:#00f0f0">■■■■</span> I</li>
+          <li><span class="piece-block" style="background:#f0f000">■■<br>■■</span> O</li>
+          <li><span class="piece-block" style="background:#a000f0">■■■<br>&nbsp;■</span> T</li>
+          <li><span class="piece-block" style="background:#00f000">&nbsp;■■<br>■■</span> S</li>
+          <li><span class="piece-block" style="background:#f00000">■■<br>&nbsp;■■</span> Z</li>
+          <li><span class="piece-block" style="background:#0000f0">■<br>■■■</span> J</li>
+          <li><span class="piece-block" style="background:#f0a000">&nbsp;&nbsp;■<br>■■■</span> L</li>
+        </ul>
+      </div>
+
+      <div class="panel-card tip-card">
+        <h3>Tips</h3>
+        <ul class="tips-list">
+          <li>👻 반투명 블록은 낙하 위치 미리보기입니다.</li>
+          <li>⚡ Space로 즉시 드롭하면 빠른 플레이가 가능합니다.</li>
+          <li>🔄 벽 근처에서도 회전(↑)이 가능합니다.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <canvas id="board"></canvas>
+
+    <aside class="side-panel">
+      <div class="panel-card">
+        <h3>Score</h3>
+        <div id="score">0</div>
+      </div>
+
+      <div class="panel-card">
+        <h3>Next</h3>
+        <canvas id="next" width="120" height="96"></canvas>
+      </div>
+
+      <div class="panel-card">
+        <h3>Controls</h3>
+        <ul class="controls-list">
+          <li><span>Move</span><kbd>← →</kbd></li>
+          <li><span>Rotate</span><kbd>↑</kbd></li>
+          <li><span>Soft drop</span><kbd>↓</kbd></li>
+          <li><span>Hard drop</span><kbd>Space</kbd></li>
+        </ul>
+      </div>
+
+      <button id="startBtn">Restart</button>
+      <button id="muteBtn" title="Toggle Music">🔊 Music</button>
+    </aside>
+  </div>
+
+  <!-- Start Overlay -->
+  <div id="start-overlay" class="overlay">
+    <div class="overlay-box">
+      <h2>TETRIS</h2>
+      <p class="overlay-sub">블록을 쌓고 줄을 지워 최고 점수를 노려보세요!</p>
+      <button onclick="document.getElementById('startBtn').click()">▶ Start Game</button>
+    </div>
+  </div>
+
+  <!-- Game Over Overlay -->
+  <div id="overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>GAME OVER</h2>
+      <p>Final Score</p>
+      <div class="final-score" id="finalScore">0</div>
+      <button onclick="document.getElementById('startBtn').click()">▶ Play Again</button>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/piece.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

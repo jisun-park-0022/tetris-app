@@ -1,0 +1,278 @@
+.game-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* ── Rules Panel (left) ── */
+.rules-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 200px;
+}
+
+.rules-list {
+  list-style: decimal;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rules-list li {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.score-table {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.score-table li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.line-pts {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tetris-row {
+  margin-top: 2px;
+}
+
+.tetris-pts {
+  color: var(--accent) !important;
+}
+
+.tetris-note {
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.tetris-note strong {
+  color: var(--accent);
+}
+
+.pieces-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pieces-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.piece-block {
+  font-size: 0.6rem;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  display: inline-block;
+  border-radius: 2px;
+  padding: 1px 3px;
+  color: rgba(0,0,0,0.5);
+  min-width: 40px;
+  text-shadow: none;
+  font-weight: 700;
+}
+
+.tip-card {}
+
+.tips-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tips-list li {
+  font-size: 0.73rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+#board {
+  border: 2px solid var(--border);
+  box-shadow: 0 0 30px rgba(0, 240, 240, 0.15);
+  display: block;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 130px;
+}
+
+.panel-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.panel-card h3 {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+#score {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--score-color);
+  text-shadow: 0 0 10px rgba(0, 240, 240, 0.4);
+}
+
+#next {
+  display: block;
+  margin: 0 auto;
+}
+
+.controls-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.controls-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.controls-list kbd {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: inherit;
+  font-size: 0.68rem;
+  color: var(--text);
+}
+
+#startBtn {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+#startBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+#startBtn:active {
+  transform: translateY(0);
+}
+
+#muteBtn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#muteBtn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+/* Game Over overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 48px;
+  text-align: center;
+}
+
+.overlay-box h2 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.overlay-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 24px !important;
+  line-height: 1.5;
+}
+
+.overlay-box p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.overlay-box .final-score {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--score-color);
+  margin: 10px 0 24px;
+}
+
+.overlay-box button {
+  padding: 12px 32px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.overlay-box button:hover {
+  opacity: 0.88;
+}
