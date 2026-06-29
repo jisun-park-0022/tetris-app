@@ -212,6 +212,32 @@
   border-color: var(--muted);
 }
 
+#autoBtn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#autoBtn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+#autoBtn.active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+#autoBtn.hidden {
+  display: none;
+}
+
 /* Game Over overlay */
 .overlay {
   position: fixed;

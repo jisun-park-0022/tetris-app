@@ -18,24 +18,72 @@ class Game {
     this.current = null;
     this.next = null;
     this.gameOver = false;
+    this.started = false;
+    this.paused = false;
     this.lastTime = 0;
     this.dropCounter = 0;
     this.animId = null;
 
-    this.startOverlay = document.getElementById('start-overlay');
     this.audio = new AudioManager();
+    this.ai = new TetrisAI();
+    this.autoMode = false;
 
     document.addEventListener('keydown', e => this._onKey(e));
-    document.getElementById('startBtn').addEventListener('click', () => {
-      this.startOverlay.classList.add('hidden');
-      this.reset();
-    });
+    document.getElementById('startBtn').addEventListener('click', () => this.reset());
 
     const muteBtn = document.getElementById('muteBtn');
     muteBtn.addEventListener('click', () => {
       const isMuted = this.audio.toggleMute();
       muteBtn.textContent = isMuted ? '🔇 Music' : '🔊 Music';
     });
+
+    const autoBtn = document.getElementById('autoBtn');
+    autoBtn.addEventListener('click', () => {
+      if (isLoggedIn()) return;
+      const isAuto = this.toggleAuto();
+      autoBtn.textContent = isAuto ? '🤖 Auto ON' : '🤖 Auto';
+      autoBtn.classList.toggle('active', isAuto);
+      if (isAuto && this.started && !this.gameOver) this._applyAIMove();
+    });
+  }
+
+  pause() {
+    if (!this.started || this.gameOver || this.paused) return;
+    this.paused = true;
+    if (this.animId) { cancelAnimationFrame(this.animId); this.animId = null; }
+  }
+
+  resume() {
+    if (!this.started || this.gameOver || !this.paused) return;
+    this.paused = false;
+    this.lastTime = 0;
+    this.animId = requestAnimationFrame(ts => this._loop(ts));
+  }
+
+  toggleAuto() {
+    this.autoMode = !this.autoMode;
+    return this.autoMode;
+  }
+
+  returnToStart() {
+    if (this.animId) { cancelAnimationFrame(this.animId); this.animId = null; }
+    this.audio.stop();
+    this.board.reset();
+    this.score = 0;
+    this.scoreEl.textContent = '0';
+    this.gameOver = false;
+    this.started = false;
+    this.paused = false;
+    this.autoMode = false;
+    this.dropCounter = 0;
+    this.lastTime = 0;
+    this.current = null;
+    this.next = null;
+    this.overlay.classList.add('hidden');
+    this._drawIdleBoard();
+    const autoBtn = document.getElementById('autoBtn');
+    if (autoBtn) { autoBtn.textContent = '🤖 Auto'; autoBtn.classList.remove('active'); }
+    document.getElementById('start-overlay').classList.remove('hidden');
   }
 
   reset() {
@@ -43,6 +91,8 @@ class Game {
     this.score = 0;
     this.scoreEl.textContent = '0';
     this.gameOver = false;
+    this.started = true;
+    this.paused = false;
     this.dropCounter = 0;
     this.lastTime = 0;
     this.overlay.classList.add('hidden');
@@ -66,8 +116,37 @@ class Game {
     this.next = this._spawn();
     if (!this.board.isValid(this.current)) {
       this._endGame();
+      return;
     }
     this._drawNext();
+    if (this.autoMode) this._applyAIMove();
+  }
+
+  _applyAIMove() {
+    if (!this.current) return;
+    const { rotations, x } = this.ai.getBestMove(this.board, this.current);
+
+    for (let i = 0; i < rotations; i++) {
+      this.current.rotate();
+      if (!this.board.isValid(this.current)) {
+        this.current.x--;
+        if (!this.board.isValid(this.current)) {
+          this.current.x += 2;
+          if (!this.board.isValid(this.current)) {
+            this.current.x--;
+            for (let j = 0; j < 3; j++) this.current.rotate();
+            break;
+          }
+        }
+      }
+    }
+
+    this.current.x = x;
+    while (!this.board.isValid(this.current) && this.current.x > 0) this.current.x--;
+
+    setTimeout(() => {
+      if (this.autoMode && !this.gameOver && this.started) this._hardDrop();
+    }, 400);
   }
 
   _loop(timestamp) {
@@ -120,7 +199,7 @@ class Game {
   }
 
   _onKey(e) {
-    if (this.gameOver) return;
+    if (this.gameOver || this.autoMode) return;
     switch (e.code) {
       case 'ArrowLeft':
         this.current.x--;
@@ -170,11 +249,27 @@ class Game {
     }
   }
 
-  _endGame() {
+  async _endGame() {
     this.gameOver = true;
     this.audio.stop();
     this.overlay.classList.remove('hidden');
     document.getElementById('finalScore').textContent = this.score;
+
+    const msgEl = document.getElementById('score-save-msg');
+    if (isLoggedIn()) {
+      try {
+        await saveScore(this.score);
+        msgEl.textContent = '✓ 점수가 저장되었습니다.';
+        msgEl.className = 'score-msg saved';
+        refreshLeaderboard();
+      } catch {
+        msgEl.textContent = '점수 저장에 실패했습니다.';
+        msgEl.className = 'score-msg error';
+      }
+    } else {
+      msgEl.textContent = '로그인하면 점수를 저장할 수 있습니다.';
+      msgEl.className = 'score-msg guest';
+    }
   }
 
   _render() {
@@ -255,6 +350,6 @@ class Game {
 }
 
 window.addEventListener('load', () => {
-  const game = new Game();
-  game._drawIdleBoard();
+  window.game = new Game();
+  window.game._drawIdleBoard();
 });

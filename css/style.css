@@ -24,6 +24,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  gap: 0;
 }
 
 h1 {
@@ -33,4 +34,15 @@ h1 {
   color: var(--accent);
   margin-bottom: 20px;
   text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+}
+
+#logo {
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: text-shadow 0.2s, opacity 0.2s;
+}
+
+#logo:hover {
+  opacity: 0.8;
+  text-shadow: 0 0 32px rgba(233, 69, 96, 0.85);
 }

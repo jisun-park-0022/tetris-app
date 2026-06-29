@@ -1,0 +1,301 @@
+/* ── Start Screen Choices ── */
+.start-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.start-choice-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+
+.start-choice-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.start-choice-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.start-choice-btn.guest {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 400;
+  padding: 8px;
+}
+
+.start-choice-btn.guest:hover {
+  color: var(--text);
+}
+
+.choice-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2px 0;
+}
+
+/* ── User Header ── */
+.user-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 16px;
+}
+
+.user-header h1 {
+  margin-bottom: 0;
+}
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-auth.hidden {
+  display: none;
+}
+
+.auth-btn {
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.auth-btn:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.auth-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.auth-btn.primary:hover {
+  opacity: 0.85;
+}
+
+.user-email {
+  font-size: 0.82rem;
+  color: var(--score-color);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Leaderboard ── */
+.leaderboard-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.leaderboard-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+}
+
+.lb-rank {
+  width: 18px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.lb-email {
+  flex: 1;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-score {
+  color: var(--score-color);
+  font-weight: 600;
+  font-size: 0.76rem;
+}
+
+.lb-empty {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+/* 현재 로그인 유저 행 강조 */
+.lb-me {
+  background: rgba(233, 69, 96, 0.1);
+  border-radius: 4px;
+  padding: 1px 4px;
+  margin: 0 -4px;
+}
+
+.lb-me .lb-email {
+  color: var(--accent) !important;
+}
+
+.lb-me .lb-score {
+  color: var(--accent) !important;
+}
+
+/* Best Score 카드 */
+.best-score-card .leaderboard-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.best-score-card .leaderboard-list li:last-child {
+  border-bottom: none;
+}
+
+/* ── Score save message ── */
+.score-msg {
+  font-size: 0.78rem;
+  margin: 6px 0 10px;
+  min-height: 1.2em;
+}
+
+.score-msg.saved { color: #00f000; }
+.score-msg.guest { color: var(--muted); }
+.score-msg.error { color: var(--accent); }
+
+/* ── Modal ── */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 36px;
+  width: 320px;
+  position: relative;
+}
+
+.modal-box h2 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.modal-box label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+
+.modal-box label:first-of-type {
+  margin-top: 0;
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.modal-box input:focus {
+  border-color: var(--accent);
+}
+
+.auth-error {
+  color: var(--accent);
+  font-size: 0.75rem;
+  min-height: 1.2em;
+  margin-top: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.submit-btn:hover {
+  opacity: 0.88;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-switch {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.modal-switch a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.modal-switch a:hover {
+  text-decoration: underline;
+}
